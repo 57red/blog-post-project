@@ -33,6 +33,7 @@ let posts = [
 
 let lastId = 3;
 
+// GET ALL posts
 app.get("/posts", (req, res) => {
   res.json(posts);
 });
