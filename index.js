@@ -38,6 +38,13 @@ app.get("/posts", (req, res) => {
   res.json(posts);
 });
 
+// GET specific post by id
+app.get("/posts/:id", (req, res) => {
+  const id = req.params.id;
+  const findPost = posts.find((post) => post.id === parseInt(id));
+  res.json(findPost);
+});
+
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}.`);
 });

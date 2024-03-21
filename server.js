@@ -23,6 +23,19 @@ app.get("/new", (req, res) => {
   res.render("modify.ejs", { heading: "New Post", submit: "Create Post" });
 });
 
+// Render the edit page
+app.get("/edit/:id", async (req, res) => {
+  try {
+    const response = await axios.get(`${API_URL}/posts/${req.params.id}`);
+    res.render("modify.ejs", {
+      heading: "Edit Post",
+      submit: "Update Post", 
+      post: response.data
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching post" });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Backend server is running on http://localhost:${port}.`)
