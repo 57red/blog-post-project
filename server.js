@@ -48,6 +48,16 @@ app.post("/api/posts", async (req, res) => {
   }
 });
 
+// Update a post
+app.post("/api/posts/:id", async (req, res) => {
+  try {
+    const response = await axios.patch(`${API_URL}/posts/${req.params.id}`, req.body);
+    res.redirect("/");
+  } catch (error) {
+    res.status(500).json({ message: "Error updating post"});
+  }
+});
+
 app.listen(port, () => {
   console.log(`Backend server is running on http://localhost:${port}.`)
 })

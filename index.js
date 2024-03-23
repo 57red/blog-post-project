@@ -63,6 +63,19 @@ app.post("/posts", (req, res) => {
   res.json(newPost);
 });
 
+// PATCH a new post
+app.patch("/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const post = posts.find((post) => post.id === id);
+  if (!post) return res.sendStatus(404).json({ message: "Post not found" });
+
+  if (req.body.title) post.title = req.body.title;
+  if (req.body.content) post.content = req.body.post;
+  if (req.body.author) post.author = req.body.author;
+
+  res.json(post);
+});
+
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}.`);
 });
