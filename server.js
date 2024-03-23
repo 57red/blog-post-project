@@ -7,6 +7,7 @@ const port = 3000;
 const API_URL = "http://localhost:4000";
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Render the main page
 app.get("/", async (req, res) => {
@@ -34,6 +35,16 @@ app.get("/edit/:id", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Error fetching post" });
+  }
+});
+
+// Create a new post
+app.post("/api/posts", async (req, res) => {
+  try {
+    const response = await axios.post(`${API_URL}/posts`, req.body);
+    res.redirect("/");
+  } catch (error) {
+    res.status(500).json({ message: "Error creating post" });
   }
 });
 

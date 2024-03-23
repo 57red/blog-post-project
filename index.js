@@ -4,6 +4,9 @@ import bodyParser from "body-parser";
 const app = express();
 const port = 4000;
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 let posts = [
   {
     id: 1,
@@ -40,9 +43,24 @@ app.get("/posts", (req, res) => {
 
 // GET specific post by id
 app.get("/posts/:id", (req, res) => {
-  const id = req.params.id;
-  const findPost = posts.find((post) => post.id === parseInt(id));
+  const id = parseInt(req.params.id);
+  const findPost = posts.find((post) => post.id === id);
   res.json(findPost);
+});
+
+// POST a new post
+app.post("/posts", (req, res) => {
+  let newId = lastId + 1;
+  const newPost = {
+    id: newId,
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author,
+    date: new Date()
+  }
+  lastId = newId;
+  posts.push(newPost);
+  res.json(newPost);
 });
 
 app.listen(port, () => {
