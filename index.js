@@ -76,6 +76,18 @@ app.patch("/posts/:id", (req, res) => {
   res.json(post);
 });
 
+// DELETE a post
+app.delete("/posts/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const searchIndex = posts.findIndex((post) => post.id === id);
+  if (searchIndex > -1) {
+    posts.splice(searchIndex, 1);
+    res.json({ message: "Post deleted" });
+  } else {
+    res.sendStatus(404).json({ message: "Post not found" });
+  }
+})
+
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}.`);
 });
